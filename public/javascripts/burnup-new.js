@@ -124,6 +124,16 @@ function drawBox(g) {
             .attr("y1", function(d) { return x1(d[0]); })
             .attr("y2", function(d) { return x1(d[1]); });
 
+        var whiskerTick = g.selectAll("text.whisker")
+            .data(iterationData.spread);
+            whiskerTick.enter().append("text")
+                .attr("class", "whisker")
+                .attr("dy", ".3em")
+                .attr("dx", 6)
+                .attr("x", boxWidth)
+                .attr("y", x1)
+                .text(x1.tickFormat(8))
+                .style("opacity", 1);
 
     });
 
