@@ -24,7 +24,7 @@ var y = d3.scale.linear()
 
 var xAxis = d3.svg.axis()
     .scale(x)
-    .tickValues(rabuData.map(function(d){return new Date(d.iteration);}))
+    .tickValues(iterationDates)
     .tickFormat(d3.time.format("%m/%d"))
     .orient("bottom");
 
@@ -113,13 +113,11 @@ function drawBox(g) {
             .attr("y2", x1)
             .style("opacity", 1);
 
-
-        // Update center line: the vertical line spanning the whiskers.
-        var center = g.selectAll("line.center")
+        var whiskerVertical = g.selectAll("line.whisker-vertical")
             .data(whiskerData ? [whiskerData] : []);
 
-        center.enter().insert("line", "rect")
-            .attr("class", "center")
+        whiskerVertical.enter().insert("line", "rect")
+            .attr("class", "whisker-vertical")
             .attr("x1", boxWidth / 2)
             .attr("x2", boxWidth / 2)
             .style("opacity", 1)

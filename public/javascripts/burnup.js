@@ -1,9 +1,10 @@
 var startDate = moment("2014-01-29");
 var iterationData = [3.5, 4, 4, 5, 5];
-var totalIterations = 9;
+var plannedIterations = 9;
+var iterationDates = new Array(5).map(function(e,i) {return startDate.clone().add('weeks', i).valueOf();});
 var cumulativePoints = 0;
 var rabuData = iterationData.map(function (velocity, i) {
-    var remainingIterations = totalIterations - i;
+    var remainingIterations = plannedIterations - i;
     var idealPoints = remainingIterations * velocity;
     var futurePoints = [idealPoints/1.8, idealPoints/1.4, idealPoints];
 
