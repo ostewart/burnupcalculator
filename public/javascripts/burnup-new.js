@@ -99,6 +99,34 @@ function drawBox(g) {
             .attr("y2", x1);
         console.log("medianLine: " + medianLine);
         console.log("d: " + iterationData.spread);
+
+
+        var whiskerData = [iterationData.spread[0], iterationData.spread[2]];
+        var whisker = g.selectAll("line.whisker")
+            .data(whiskerData);
+
+        whisker.enter().insert("line", "circle, text")
+            .attr("class", "whisker")
+            .attr("x1", 0)
+            .attr("y1", x1)
+            .attr("x2", boxWidth)
+            .attr("y2", x1)
+            .style("opacity", 1);
+
+
+        // Update center line: the vertical line spanning the whiskers.
+        var center = g.selectAll("line.center")
+            .data(whiskerData ? [whiskerData] : []);
+
+        center.enter().insert("line", "rect")
+            .attr("class", "center")
+            .attr("x1", boxWidth / 2)
+            .attr("x2", boxWidth / 2)
+            .style("opacity", 1)
+            .attr("y1", function(d) { return x1(d[0]); })
+            .attr("y2", function(d) { return x1(d[1]); });
+
+
     });
 
 }
