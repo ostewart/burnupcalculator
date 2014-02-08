@@ -12,7 +12,8 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var x = d3.time.scale()
-    .domain([rabuData[0].iteration, moment("2014-03-31").valueOf()])
+    .domain([moment(rabuData[0].iteration).subtract("weeks", 1).valueOf(), moment("2014-03-31").valueOf()])
+//    .tickFormat(function(t){return "blah";})
     .range([0,width]);
 var y = d3.scale.linear()
     .domain([0, d3.max(maxValues) + 5])
@@ -23,6 +24,8 @@ var y = d3.scale.linear()
 
 var xAxis = d3.svg.axis()
     .scale(x)
+    .tickValues(rabuData.map(function(d){return new Date(d.iteration);}))
+    .tickFormat(d3.time.format("%m/%d"))
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
@@ -32,6 +35,7 @@ var yAxis = d3.svg.axis()
 // draw y axis
 svg.append("g")
     .attr("class", "y axis")
+    .attr("transform", "translate(0," + margin.top + ")")
     .call(yAxis)
     .append("text") // and text1
     .attr("transform", "rotate(-90)")
@@ -65,19 +69,20 @@ var max = d3.max(d3.merge(rabuData.map(function (d) {
 //    .height(height)
 //    .domain([min, max]);
 
+var boxWidth = 10;
 
 svg.selectAll(".box")
     .data(rabuData)
     .enter().append("g")
+    .attr("width", boxWidth)
     .attr("transform", function (d) {
-        return "translate(" + x(d.iteration) + "," + margin.top + ")";
+        return "translate(" + (x(d.iteration) - (boxWidth/2)) + "," + margin.top + ")";
     })
     .call(drawBox);
 
 
 function drawBox(g) {
     g.each(function(iterationData,i) {
-        var boxWidth = 10;
         var g = d3.select(this);
         var x1 = d3.scale.linear()
             .domain([min, max])
