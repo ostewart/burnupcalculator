@@ -50,7 +50,7 @@ svg.selectAll("g.box")
 
 
 var x = d3.time.scale()
-    .domain([rabuData[0].iteration, moment("2014-03-31").valueOf()])
+    .domain([rabuData[0].date, moment("2014-03-31").valueOf()])
     .range([0,width]);
 var y = d3.scale.linear()
     .domain([0, d3.max(maxValues) + 5])

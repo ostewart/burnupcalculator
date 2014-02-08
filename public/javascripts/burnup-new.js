@@ -12,7 +12,7 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var x = d3.time.scale()
-    .domain([moment(rabuData[0].iteration).subtract("weeks", 1).valueOf(), moment("2014-03-31").valueOf()])
+    .domain([moment(rabuData[0].date).subtract("weeks", 1).valueOf(), moment("2014-03-31").valueOf()])
 //    .tickFormat(function(t){return "blah";})
     .range([0,width]);
 var y = d3.scale.linear()
@@ -76,20 +76,20 @@ svg.selectAll(".box")
     .enter().append("g")
     .attr("width", boxWidth)
     .attr("transform", function (d) {
-        return "translate(" + (x(d.iteration) - (boxWidth/2)) + "," + margin.top + ")";
+        return "translate(" + (x(d.date) - (boxWidth/2)) + "," + margin.top + ")";
     })
     .call(drawBox);
 
 
 function drawBox(g) {
-    g.each(function(iterationData,i) {
+    g.each(function(iteration,i) {
         var g = d3.select(this);
         var x1 = d3.scale.linear()
             .domain([min, max])
             .range([height, 0]);
 
         var medianLine = g.selectAll("line.median")
-            .data([iterationData.spread[1]]);
+            .data([iteration.spread[1]]);
 
         medianLine.enter().append("line")
             .attr("class", "median")
@@ -98,10 +98,10 @@ function drawBox(g) {
             .attr("x2", boxWidth)
             .attr("y2", x1);
         console.log("medianLine: " + medianLine);
-        console.log("d: " + iterationData.spread);
+        console.log("d: " + iteration.spread);
 
 
-        var whiskerData = [iterationData.spread[0], iterationData.spread[2]];
+        var whiskerData = [iteration.spread[0], iteration.spread[2]];
         var whisker = g.selectAll("line.whisker")
             .data(whiskerData);
 
@@ -125,7 +125,7 @@ function drawBox(g) {
             .attr("y2", function(d) { return x1(d[1]); });
 
         var whiskerTick = g.selectAll("text.whisker")
-            .data(iterationData.spread);
+            .data(iteration.spread);
             whiskerTick.enter().append("text")
                 .attr("class", "whisker")
                 .attr("dy", ".3em")
@@ -134,7 +134,58 @@ function drawBox(g) {
                 .attr("y", x1)
                 .text(x1.tickFormat(8))
                 .style("opacity", 1);
-
     });
+
+    drawComplete(rabuData);
+}
+
+function drawComplete(completeData) {
+    var allIterations = [{date: moment(completeData[0].date).clone().subtract('weeks', 1).toDate(), points: 0}].concat(completeData);
+    console.log("allIterations: " + allIterations);
+    var complete = svg.append("g")
+        .attr("class", "complete")
+        .attr("transform", "translate(0," + margin.top + ")");
+
+
+
+    var area = d3.svg.area()
+        .interpolate("linear")
+        .x(function(d) { return x(d.date); })
+        .y0(height)
+        .y1(function(d) { return y(d.points); });
+
+// A line generator, for the dark stroke.
+    var line = d3.svg.line()
+        .interpolate("linear")
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.points); });
+
+
+    var lastIteration = allIterations[allIterations.length - 1];
+    complete.append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr("width", x(lastIteration.date))
+        .attr("height", height);
+
+// Add the area path.
+    complete.append("path")
+        .attr("class", "area")
+        .attr("clip-path", "url(#clip)")
+        .attr("d", area(allIterations));
+
+// Add the line path.
+    complete.append("path")
+        .attr("class", "line")
+        .attr("clip-path", "url(#clip)")
+        .attr("d", line(allIterations));
+
+// Add the symbol path
+    complete.selectAll("circle")
+        .data(allIterations)
+        .enter().append("path")
+        .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.points) + ")"; })
+        .attr("class", "symbol")
+        .attr("d", d3.svg.symbol());
 
 }

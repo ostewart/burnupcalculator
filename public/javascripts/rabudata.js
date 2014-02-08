@@ -13,8 +13,9 @@ var rabuData = iterationData.map(function (velocity, i) {
     });
     cumulativePoints += velocity;
     return {
-        iteration: startDate.clone().add('weeks', i).valueOf(),
-        spread: totalPointsSpread
+        date: startDate.clone().add('weeks', i).valueOf(),
+        spread: totalPointsSpread,
+        points: velocity
     };
 });
 

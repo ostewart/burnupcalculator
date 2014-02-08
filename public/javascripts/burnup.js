@@ -13,7 +13,7 @@ var rabuData = iterationData.map(function (velocity, i) {
     });
     cumulativePoints += velocity;
     return {
-        iteration: startDate.add('weeks', i).valueOf(),
+        date: startDate.add('weeks', i).valueOf(),
         spread: totalPointsSpread
     };
 });
@@ -25,7 +25,7 @@ var margin = {top: 80, right: 80, bottom: 80, left: 80},
     height = 500 - margin.top - margin.bottom;
 
 var x = d3.time.scale()
-    .domain([rabuData[0].iteration, moment("2014-03-31").valueOf()])
+    .domain([rabuData[0].date, moment("2014-03-31").valueOf()])
     .range([0,width]);
 var y = d3.scale.linear()
     .domain([0, d3.max(maxValues) + 5])
@@ -36,14 +36,14 @@ var yAxis = d3.svg.axis().scale(y).ticks(4).orient("right");
 
 var area = d3.svg.area()
     .interpolate("linear")
-    .x(function(d) { return x(d.iteration); })
+    .x(function(d) { return x(d.date); })
     .y0(height)
     .y1(function(d) { return y(d.spread[0]); });
 
 // A line generator, for the dark stroke.
 var line = d3.svg.line()
     .interpolate("linear")
-    .x(function(d) { return x(d.iteration); })
+    .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.spread[2]); });
 
 var symbol = d3.svg.symbol()
@@ -90,7 +90,7 @@ svg.append("path")
 svg.selectAll("circle")
     .data(rabuData)
     .enter().append("path")
-    .attr("transform", function(d) { return "translate(" + x(d.iteration) + "," + y(d.spread[1]) + ")"; })
+    .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.spread[1]) + ")"; })
     .attr("class", "symbol")
     .attr("d", d3.svg.symbol());
 
