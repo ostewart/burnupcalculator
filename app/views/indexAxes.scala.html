@@ -1,0 +1,54 @@
+@(message: String)
+
+@main("Welcome to Play") {
+
+    <style>
+
+    body {
+    font-family : "Helvetica Neue", Helvetica, Arial, sans-serif ;
+    }
+
+    .box {
+    font : 10 px sans-serif ;
+    }
+
+    .box line,
+    .box rect,
+    .box circle {
+    fill : steelblue ;
+    stroke : #000 ;
+    stroke-width : 1 px ;
+    }
+
+    .box.center {
+    stroke-dasharray : 3, 3 ;
+    }
+
+    .box.outlier {
+    fill : none ;
+    stroke : #000 ;
+    }
+
+    .axis {
+    font : 12 px sans-serif ;
+    }
+
+    .axis path,
+    .axis line {
+    fill : none ;
+    stroke : #000 ;
+    shape-rendering : crispEdges ;
+    }
+
+    .x.axis path {
+    fill : none ;
+    stroke : #000 ;
+    shape-rendering : crispEdges ;
+    }
+
+    </style>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="@routes.Assets.at("javascripts/box-axes.js")"></script>
+        <script src="@routes.Assets.at("javascripts/axes.js")"></script>
+
+}

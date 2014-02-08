@@ -1,0 +1,61 @@
+@(message: String)
+
+@main("Welcome to Play") {
+    <style type="text/css">
+
+        body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+
+
+
+
+        path.line {
+        fill: none;
+        stroke: #666;
+        stroke-width: 1.5px;
+        }
+
+        path.area {
+        fill: #e7e7e7;
+        }
+
+        .axis {
+        shape-rendering: crispEdges;
+        }
+
+        .x.axis line {
+        stroke: #fff;
+        }
+
+        .x.axis .minor {
+        stroke-opacity: .5;
+        }
+
+        .x.axis path {
+        display: none;
+        }
+
+        .y.axis line, .y.axis path {
+        fill: none;
+        stroke: #000;
+        }
+
+
+        path.symbol {
+        fill: none;
+        stroke: #666;
+        stroke-width: 1.5px;
+        }
+
+    </style>
+<!-- candlestick chart; box plot -->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.js"></script>
+    <script src="@routes.Assets.at( "javascripts/rabudata.js")"></script>
+    <script src="@routes.Assets.at( "javascripts/box.js")"></script>
+    <script src="@routes.Assets.at( "javascripts/burnup.js")"></script>
+
+}
