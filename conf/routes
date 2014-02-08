@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /                           controllers.Application.burnup
 GET     /2                           controllers.Application.index2
 GET     /no-whiskers                           controllers.Application.noWhiskers
 GET     /axes                           controllers.Application.indexAxes
