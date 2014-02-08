@@ -140,7 +140,7 @@ function drawBox(g) {
 }
 
 function drawComplete(completeData) {
-    var allIterations = [{date: moment(completeData[0].date).clone().subtract('weeks', 1).toDate(), points: 0}].concat(completeData);
+    var allIterations = [{date: moment(completeData[0].date).clone().subtract('weeks', 1).toDate(), points: 0, cumulativePoints: 0}].concat(completeData);
     console.log("allIterations: " + allIterations);
     var complete = svg.append("g")
         .attr("class", "complete")
@@ -152,13 +152,13 @@ function drawComplete(completeData) {
         .interpolate("linear")
         .x(function(d) { return x(d.date); })
         .y0(height)
-        .y1(function(d) { return y(d.points); });
+        .y1(function(d) { return y(d.cumulativePoints); });
 
 // A line generator, for the dark stroke.
     var line = d3.svg.line()
         .interpolate("linear")
         .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.points); });
+        .y(function(d) { return y(d.cumulativePoints); });
 
 
     var lastIteration = allIterations[allIterations.length - 1];
@@ -184,7 +184,7 @@ function drawComplete(completeData) {
     complete.selectAll("circle")
         .data(allIterations)
         .enter().append("path")
-        .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.points) + ")"; })
+        .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.cumulativePoints) + ")"; })
         .attr("class", "symbol")
         .attr("d", d3.svg.symbol());
 
