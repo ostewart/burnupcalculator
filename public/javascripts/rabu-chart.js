@@ -1,10 +1,12 @@
 define(["d3", "moment"], function (d3, moment) {
     return {
-        draw: function (rabu) {
+        draw: function (rabu, totalWidth, totalHeight) {
+            var totalWidth = totalWidth || 800;
+            var totalHeight = totalHeight || 400;
 
             var margin = {top: 30, right: 50, bottom: 70, left: 50};
-            var width = 800 - margin.left - margin.right;
-            var height = 400 - margin.top - margin.bottom;
+            var width = totalWidth - margin.left - margin.right;
+            var height = totalHeight - margin.top - margin.bottom;
 
             var svg = d3.select("body").append("svg")
                 .attr("width", width + margin.left + margin.right)
