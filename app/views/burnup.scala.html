@@ -1,79 +1,10 @@
 @(message: String)
 
-@main("Welcome to Play") {
-    <style type="text/css">
-    #chart {
-    width: 90%;
-    height: 50%;
-    background-color: blue;
-    }
-
-    body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-    .box {
-    font: 10px sans-serif;
-    }
-
-    .box line,
-    .box rect,
-    .box circle {
-    fill: #fff;
-    stroke: #000;
-    stroke-width: 1.5px;
-    }
-
-    .box .whisker-vertical {
-    stroke-dasharray: 3,3;
-    }
-
-    .box .outlier {
-    fill: none;
-    stroke: #ccc;
-    }
-
-
-
-
-
-
-    path.line {
-    fill: none;
-    stroke: #666;
-    stroke-width: 1.5px;
-    }
-
-    path.area {
-    fill: #e7e7e7;
-    }
-
-    .axis {
-    shape-rendering: crispEdges;
-    }
-
-    .x.axis .minor {
-    stroke-opacity: .5;
-    }
-
-    .x.axis line, .x.axis path, .y.axis line, .y.axis path {
-    fill: none;
-    stroke: #000;
-    }
-
-
-    path.symbol {
-    fill: none;
-    stroke: #666;
-    stroke-width: 1.5px;
-    }
-
-
-    </style>
-
+@main("Burn Up Chart") {
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/burnup.css")"/>
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.js"></script>
-    <script src="@routes.Assets.at( "javascripts/box-orig.js")"></script>
+    @*<script src="@routes.Assets.at( "javascripts/box-orig.js")"></script>*@
     <script src="@routes.Assets.at( "javascripts/rabudata.js")"></script>
     <script src="@routes.Assets.at( "javascripts/burnup-new.js")"></script>
 }

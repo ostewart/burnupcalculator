@@ -2,8 +2,6 @@ var margin = {top: 30, right: 50, bottom: 70, left: 50};
 var width = 800 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
-
-
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -64,6 +62,18 @@ var min = 0;
 var max = d3.max(d3.merge(rabuData.map(function (d) {
     return d.spread
 })));
+
+
+
+var area = d3.svg.area()
+    .interpolate("linear")
+    .x(function(d) { return x(d.date); })
+    .y0(height)
+    .y1(function(d) { return y(d.cumulativePoints); });
+
+grid.append("path")
+    .attr("class", "feature-area")
+    .attr("d", area([{date: moment(rabuData[0].date).clone().subtract('weeks', 1).toDate(), points: 28, cumulativePoints: 28}].concat(rabuData.map(function(d) {return {date: d.date, points: 28, cumulativePoints: 28}}))));
 
 
 //var chart = d3.box()
@@ -136,21 +146,6 @@ function drawComplete(completeData) {
     var complete = grid.append("g")
         .attr("class", "complete");
 
-
-
-    var area = d3.svg.area()
-        .interpolate("linear")
-        .x(function(d) { return x(d.date); })
-        .y0(height)
-        .y1(function(d) { return y(d.cumulativePoints); });
-
-// A line generator, for the dark stroke.
-    var line = d3.svg.line()
-        .interpolate("linear")
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.cumulativePoints); });
-
-
     var lastIteration = allIterations[allIterations.length - 1];
     complete.append("clipPath")
         .attr("id", "clip")
@@ -158,11 +153,26 @@ function drawComplete(completeData) {
         .attr("width", x(lastIteration.date))
         .attr("height", height);
 
+    var area = d3.svg.area()
+        .interpolate("linear")
+        .x(function(d) { return x(d.date); })
+        .y0(height)
+        .y1(function(d) { return y(d.cumulativePoints); });
+
 // Add the area path.
     complete.append("path")
         .attr("class", "area")
         .attr("clip-path", "url(#clip)")
         .attr("d", area(allIterations));
+
+
+
+
+// A line generator, for the dark stroke.
+    var line = d3.svg.line()
+        .interpolate("linear")
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.cumulativePoints); });
 
 // Add the line path.
     complete.append("path")
