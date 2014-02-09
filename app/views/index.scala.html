@@ -1,8 +1,19 @@
-@(message: String)
+@(firstIterationEndDate: String, iterations: List[Double], plannedIterations: Int)
+@import play.api.libs.json.Json
 
 @main("Burn Up Chart") {
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/burnup.css")"/>
 
     <script>
+    var data = @Html(Json.obj(
+        "firstIterationEndDate" -> firstIterationEndDate,
+        "iterations" -> iterations,
+        "plannedIterations" -> plannedIterations
+    ).toString);
+    require(["jquery","d3","moment","initerate","rabu-chart"],function($,d3,moment,initerate,chart) {
+    var rabu = initerate.init(data.firstIterationEndDate, data.iterations, data.plannedIterations);
+    console.log(rabu.iterationDates);
+    chart.draw(rabu);
+    });
     </script>
 }

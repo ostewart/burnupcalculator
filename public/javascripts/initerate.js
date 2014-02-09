@@ -8,8 +8,8 @@ define(["moment"], function(moment) {
     }
 
     return {
-        init: function(startDate, iterationPoints, plannedIterations) {
-            var startDateMoment = moment(startDate);
+        init: function(firstIterationEndDate, iterationPoints, plannedIterations) {
+            var startDateMoment = moment(firstIterationEndDate);
             var iterationDates = genIterations(startDateMoment, plannedIterations);
             var cumulativePoints = 0;
             var rabuData = iterationPoints.map(function (velocity, i) {

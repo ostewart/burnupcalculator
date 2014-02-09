@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /                           controllers.Application.index(firstIterationEndDate: String ?="2014-01-29", iterations: List[Double], plannedIterations: Int ?=9)
 GET     /old                           controllers.Application.burnup
 GET     /no-whiskers                           controllers.Application.noWhiskers
 GET     /axes                           controllers.Application.indexAxes
