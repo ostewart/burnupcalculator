@@ -6,7 +6,7 @@ var cumulativePoints = 0;
 var rabuData = iterationData.map(function (velocity, i) {
     var remainingIterations = plannedIterations - i;
     var idealPoints = remainingIterations * velocity;
-    var futurePoints = [idealPoints/1.8, idealPoints/1.4, idealPoints];
+    var futurePoints = [roundPoints(idealPoints/1.8), roundPoints(idealPoints/1.4), roundPoints(idealPoints)];
 
     var totalPointsSpread = futurePoints.map(function (p) {
         return p + cumulativePoints;
@@ -21,3 +21,7 @@ var rabuData = iterationData.map(function (velocity, i) {
 });
 
 var maxValues = rabuData.map(function(d) {return d.spread[2];});
+
+function roundPoints(d) {
+    return (Math.round(d * 2) / 2);
+}

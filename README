@@ -1,4 +1,4 @@
-This is your new Play application
+Burn Up Calculator
 =====================================
 
-This file will be packaged with your application, when using `play dist`.
+Calculates a [http://www.jamesshore.com/Blog/Use-Risk-Management-to-Make-Solid-Commitments.html](James Shore style) burn up chart for your XP team.

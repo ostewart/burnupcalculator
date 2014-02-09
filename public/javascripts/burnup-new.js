@@ -7,8 +7,10 @@ var height = 400 - margin.top - margin.bottom;
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .attr("class", "box")
-    .append("g")
+    .attr("class", "box");
+var grid = svg.append("g")
+    .attr("width", width)
+    .attr("height", height)
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var x = d3.time.scale()
@@ -35,7 +37,7 @@ var yAxis = d3.svg.axis()
 // draw y axis
 svg.append("g")
     .attr("class", "y axis")
-    .attr("transform", "translate(0," + margin.top + ")")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     .call(yAxis)
     .append("text") // and text1
     .attr("transform", "rotate(-90)")
@@ -48,7 +50,7 @@ svg.append("g")
 // draw x axis
 svg.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + (height + margin.top) + ")")
+    .attr("transform", "translate(" + margin.left + "," + (height + margin.top) + ")")
     .call(xAxis)
     .append("text")             // text label for the x axis
     .attr("x", (width / 2))
@@ -71,12 +73,14 @@ var max = d3.max(d3.merge(rabuData.map(function (d) {
 
 var boxWidth = 10;
 
-svg.selectAll(".box")
+grid.selectAll(".box")
     .data(rabuData)
     .enter().append("g")
+    .attr("class", "box")
     .attr("width", boxWidth)
+    .attr("height", height)
     .attr("transform", function (d) {
-        return "translate(" + (x(d.date) - (boxWidth/2)) + "," + margin.top + ")";
+        return "translate(" + (x(d.date) - (boxWidth/2)) + ",0)";
     })
     .call(drawBox);
 
@@ -88,29 +92,16 @@ function drawBox(g) {
             .domain([min, max])
             .range([height, 0]);
 
-        var medianLine = g.selectAll("line.median")
-            .data([iteration.spread[1]]);
-
-        medianLine.enter().append("line")
-            .attr("class", "median")
-            .attr("x1", 0)
-            .attr("y1", x1)
-            .attr("x2", boxWidth)
-            .attr("y2", x1);
-        console.log("medianLine: " + medianLine);
-        console.log("d: " + iteration.spread);
-
-
-        var whiskerData = [iteration.spread[0], iteration.spread[2]];
+        var whiskerData = iteration.spread;
         var whisker = g.selectAll("line.whisker")
             .data(whiskerData);
 
         whisker.enter().insert("line", "circle, text")
             .attr("class", "whisker")
             .attr("x1", 0)
-            .attr("y1", x1)
+            .attr("y1", y)
             .attr("x2", boxWidth)
-            .attr("y2", x1)
+            .attr("y2", y)
             .style("opacity", 1);
 
         var whiskerVertical = g.selectAll("line.whisker-vertical")
@@ -121,8 +112,8 @@ function drawBox(g) {
             .attr("x1", boxWidth / 2)
             .attr("x2", boxWidth / 2)
             .style("opacity", 1)
-            .attr("y1", function(d) { return x1(d[0]); })
-            .attr("y2", function(d) { return x1(d[1]); });
+            .attr("y1", function(d) { return y(d[0]); })
+            .attr("y2", function(d) { return y(d[2]); });
 
         var whiskerTick = g.selectAll("text.whisker")
             .data(iteration.spread);
@@ -131,8 +122,8 @@ function drawBox(g) {
                 .attr("dy", ".3em")
                 .attr("dx", 6)
                 .attr("x", boxWidth)
-                .attr("y", x1)
-                .text(x1.tickFormat(8))
+                .attr("y", y)
+                .text(function(d) {return d;})
                 .style("opacity", 1);
     });
 
@@ -142,9 +133,8 @@ function drawBox(g) {
 function drawComplete(completeData) {
     var allIterations = [{date: moment(completeData[0].date).clone().subtract('weeks', 1).toDate(), points: 0, cumulativePoints: 0}].concat(completeData);
     console.log("allIterations: " + allIterations);
-    var complete = svg.append("g")
-        .attr("class", "complete")
-        .attr("transform", "translate(0," + margin.top + ")");
+    var complete = grid.append("g")
+        .attr("class", "complete");
 
 
 
