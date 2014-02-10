@@ -6,6 +6,7 @@
 
     <form action="/chart" method="get">
         <ul>
+            <li><label>Title: <input name="title" type="text"/></label></li>
             <li><label>First iteration end date: <input required name="firstIterationEndDate" type="date" placeholder="YYYY-MM-DD"/></label></li>
             <li><label>Total iterations planned: <input required name="plannedIterations" type="number" /></label></li>
             </ul>
@@ -28,7 +29,7 @@
     <script>
     require(["jquery","d3","moment","initerate","rabu-chart"],function($,d3,moment,initerate,chart) {
         var rabu = initerate.init("2014-01-29", [3.5,4,4,4.5], 9);
-        chart.draw(rabu, 500, 300, "#chart");
+        chart.draw(rabu, 500, 300, "#chart", [20]);
         $(document ).ready(function() {
             $("#add-velocity").on("click", function(e) {
                 var butt = $('<button>Remove</button>');

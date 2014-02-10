@@ -2,6 +2,11 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+h1 {
+    display: block;
+    text-align: center;
+}
+
 .box {
     font: 10px sans-serif;
     margin-left: auto;
