@@ -80,13 +80,13 @@ define(["d3", "moment"], function (d3, moment) {
                     return y(d.cumulativePoints);
                 });
 
-            grid.append("path")
-                .attr("class", "feature-area")
-                .attr("d", area([
-                    {date: moment(rabu.data[0].date).clone().subtract('weeks', 1).toDate(), points: 28, cumulativePoints: 28}
-                ].concat(rabu.data.map(function (d) {
-                    return {date: d.date, points: 28, cumulativePoints: 28}
-                }))));
+//            grid.append("path")
+//                .attr("class", "feature-area")
+//                .attr("d", area([
+//                    {date: moment(rabu.data[0].date).clone().subtract('weeks', 1).toDate(), points: 28, cumulativePoints: 28}
+//                ].concat(rabu.data.map(function (d) {
+//                    return {date: d.date, points: 28, cumulativePoints: 28}
+//                }))));
 
 
             //var chart = d3.box()

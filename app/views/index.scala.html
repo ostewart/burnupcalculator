@@ -7,16 +7,11 @@
     <form action="/chart" method="get">
         <ul>
             <li><label>First iteration end date: <input name="firstIterationEndDate" type="date" placeholder="YYYY-MM-DD"/></label></li>
-            <li><label>Number of iterations completed: <input name="completedIterations" type="number" /></label></li>
             <li><label>Total iterations planned: <input name="plannedIterations" type="number" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
-            <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
+            </ul>
+        <ul id="velociraptor">
+            <li>Completed iterations:<button id="add-velocity">Add iteration</button></li>
+            <li id="first-velocity"><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
         </ul>
         <button type="submit">Chart!</button>
 
@@ -27,9 +22,21 @@
 
     <script>
     require(["jquery","d3","moment","initerate","rabu-chart"],function($,d3,moment,initerate,chart) {
-    var rabu = initerate.init("2014-01-29", [3.5,4,4,4.5], 9);
-    console.log(rabu.iterationDates);
-    chart.draw(rabu, 500, 300, "#chart");
+        var rabu = initerate.init("2014-01-29", [3.5,4,4,4.5], 9);
+        chart.draw(rabu, 500, 300, "#chart");
+        $(document ).ready(function() {
+            $("#add-velocity").on("click", function(e) {
+                var butt = $('<button>Remove</button>');
+                var input = $('<li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>');
+                input.append(butt);
+                var elt = $("#velociraptor").append(input);
+                $(butt).on("click", function(e) {
+                    $(this ).parent().remove();
+                    e.preventDefault();
+                });
+                e.preventDefault();
+            });
+        });
     });
     </script>
 }
