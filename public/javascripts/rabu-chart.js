@@ -1,14 +1,15 @@
 define(["d3", "moment"], function (d3, moment) {
     return {
-        draw: function (rabu, totalWidth, totalHeight) {
+        draw: function (rabu, totalWidth, totalHeight, anchor) {
             var totalWidth = totalWidth || 800;
             var totalHeight = totalHeight || 400;
+            var anchor = anchor || "body";
 
             var margin = {top: 30, right: 50, bottom: 70, left: 50};
             var width = totalWidth - margin.left - margin.right;
             var height = totalHeight - margin.top - margin.bottom;
 
-            var svg = d3.select("body").append("svg")
+            var svg = d3.select(anchor).append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .attr("class", "box");

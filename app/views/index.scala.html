@@ -2,7 +2,7 @@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/burnup.css")"/>
 
     <h1>Risk Adjusted Burn Up Charts</h1>
-    <p>In the <a href="http://www.jamesshore.com/Blog/Rabu/">style</a> of <a title="Yeah it's an affliate link. Click it!" href="http://www.amazon.com/gp/product/B00F8QCK0E/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00F8QCK0E&linkCode=as2&tag=trailmagiccom-20">James Shore</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=trailmagiccom-20&l=as2&o=1&a=B00F8QCK0E" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />.</p>
+    <p>In the <a href="http://www.jamesshore.com/Blog/Rabu/">style</a> of <a title="Yeah it's an affliate link. Use it!" href="http://www.amazon.com/gp/product/B00F8QCK0E/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00F8QCK0E&linkCode=as2&tag=trailmagiccom-20">James Shore</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=trailmagiccom-20&l=as2&o=1&a=B00F8QCK0E" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />.</p>
 
     <form action="/chart" method="get">
         <ul>
@@ -19,13 +19,17 @@
             <li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
         </ul>
         <button type="submit">Chart!</button>
+
+        <h3>For example:</h3>
+        <div id="chart"></div>
+        <address>by <a href="https://github.com/ostewart/">Oliver Stewart</a></address>
     </form>
 
     <script>
     require(["jquery","d3","moment","initerate","rabu-chart"],function($,d3,moment,initerate,chart) {
     var rabu = initerate.init("2014-01-29", [3.5,4,4,4.5], 9);
     console.log(rabu.iterationDates);
-    chart.draw(rabu, 500, 300);
+    chart.draw(rabu, 500, 300, "#chart");
     });
     </script>
 }
