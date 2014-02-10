@@ -6,13 +6,18 @@
 
     <form action="/chart" method="get">
         <ul>
-            <li><label>First iteration end date: <input name="firstIterationEndDate" type="date" placeholder="YYYY-MM-DD"/></label></li>
-            <li><label>Total iterations planned: <input name="plannedIterations" type="number" /></label></li>
+            <li><label>First iteration end date: <input required name="firstIterationEndDate" type="date" placeholder="YYYY-MM-DD"/></label></li>
+            <li><label>Total iterations planned: <input required name="plannedIterations" type="number" /></label></li>
             </ul>
         <ul id="velociraptor">
             <li>Completed iterations:<button id="add-velocity">Add iteration</button></li>
-            <li id="first-velocity"><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>
+            <li id="first-velocity"><label>Velocity <input required name="iterations" type="number" step="0.01" /></label></li>
         </ul>
+
+        <ul id="features">
+            <li>Features (optional): <button id="add-feature">Add feature</button></li>
+        </ul>
+
         <button type="submit">Chart!</button>
 
         <h3>For example:</h3>
@@ -30,6 +35,19 @@
                 var input = $('<li><label>Velocity <input name="iterations" type="number" step="0.01" /></label></li>');
                 input.append(butt);
                 var elt = $("#velociraptor").append(input);
+                $(butt).on("click", function(e) {
+                    $(this ).parent().remove();
+                    e.preventDefault();
+                });
+                e.preventDefault();
+            });
+
+
+            $("#add-feature").on("click", function(e) {
+                var butt = $('<button>Remove</button>');
+                var input = $('<li><label>Feature points <input name="features" type="number" step="0.5" /></label></li>');
+                input.append(butt);
+                var elt = $("#features").append(input);
                 $(butt).on("click", function(e) {
                     $(this ).parent().remove();
                     e.preventDefault();

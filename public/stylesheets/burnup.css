@@ -4,6 +4,9 @@ body {
 
 .box {
     font: 10px sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .box line,
@@ -23,7 +26,10 @@ body {
     stroke: #ccc;
 }
 
-
+#main-chart {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 
@@ -38,9 +44,9 @@ path.area {
     fill: #e7e7e7;
 }
 
-path.feature-area {
-    fill: lightcoral;
-}
+/*path.feature-area {*/
+    /*fill: lightcoral;*/
+/*}*/
 
 .axis {
     shape-rendering: crispEdges;

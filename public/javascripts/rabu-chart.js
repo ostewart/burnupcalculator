@@ -1,6 +1,6 @@
 define(["d3", "moment"], function (d3, moment) {
     return {
-        draw: function (rabu, totalWidth, totalHeight, anchor) {
+        draw: function (rabu, totalWidth, totalHeight, anchor, features) {
             var totalWidth = totalWidth || 800;
             var totalHeight = totalHeight || 400;
             var anchor = anchor || "body";
@@ -80,13 +80,26 @@ define(["d3", "moment"], function (d3, moment) {
                     return y(d.cumulativePoints);
                 });
 
-//            grid.append("path")
-//                .attr("class", "feature-area")
-//                .attr("d", area([
-//                    {date: moment(rabu.data[0].date).clone().subtract('weeks', 1).toDate(), points: 28, cumulativePoints: 28}
-//                ].concat(rabu.data.map(function (d) {
-//                    return {date: d.date, points: 28, cumulativePoints: 28}
-//                }))));
+            if (features) {
+                var featureColors = ["lightcoral", "lightsalmon", "#9999FF", "#FF6600", "#99FF99", "#336699", "#999966"].slice(0, features.length).reverse();
+                var cumFeaturePoints = 0;
+                var featureTotals = features.map(function(f,i) {
+                    var total = cumFeaturePoints + f;
+                    cumFeaturePoints += f;
+                    return total;
+                });
+                featureTotals.sort().reverse().forEach(function(featurePoints, i) {
+                grid.append("path")
+                    .attr("class", "feature-area")
+                    .attr("fill", featureColors[i%featureColors.length])
+                    .attr("d", area([
+                        {date: moment(rabu.data[0].date).clone().subtract('weeks', 1).toDate(), points: featurePoints, cumulativePoints: featurePoints}
+                    ].concat(rabu.data.map(function (d) {
+                        return {date: d.date, points: featurePoints, cumulativePoints: featurePoints}
+                    }))));
+
+                });
+            }
 
 
             //var chart = d3.box()

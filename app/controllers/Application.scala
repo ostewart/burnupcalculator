@@ -9,8 +9,8 @@ object Application extends Controller {
     Ok(views.html.index())
   }
 
-  def chart(firstIterationEndDate: String, iterations: List[Double], plannedIterations: Int) = Action {
-    Ok(views.html.chart(firstIterationEndDate, if (iterations.isEmpty) List[Double](3.5, 4, 4, 5, 5) else iterations, plannedIterations))
+  def chart(firstIterationEndDate: String, iterations: List[Double], plannedIterations: Int, features: List[Double]) = Action {
+    Ok(views.html.chart(firstIterationEndDate, if (iterations.isEmpty) List[Double](3.5, 4, 4, 5, 5) else iterations, plannedIterations, features))
   }
   def index2 = Action {
     Ok(views.html.index2("Your new application is ready."))
