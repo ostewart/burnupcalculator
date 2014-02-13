@@ -1,4 +1,4 @@
-define(["moment"], function(moment) {
+define(["moment","d3"], function(moment,d3) {
     function genIterations(startDateMoment, plannedIterations) {
         return Array.apply(null, Array(plannedIterations)).map(function(e,i) {return startDateMoment.clone().add('weeks', i).toDate();})
     }
@@ -14,7 +14,8 @@ define(["moment"], function(moment) {
             var cumulativePoints = 0;
             var rabuData = iterationPoints.map(function (velocity, i) {
                 var remainingIterations = plannedIterations - i;
-                var idealPoints = remainingIterations * velocity;
+                var stableVelocity = d3.mean(iterationPoints.slice(Math.max(0, i-2),i+1));
+                var idealPoints = remainingIterations * stableVelocity;
                 var futurePoints = [roundPoints(idealPoints/1.8), roundPoints(idealPoints/1.4), roundPoints(idealPoints)];
 
                 var totalPointsSpread = futurePoints.map(function (p) {

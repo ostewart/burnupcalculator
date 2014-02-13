@@ -23,7 +23,7 @@ define(["d3", "moment"], function (d3, moment) {
                 //    .tickFormat(function(t){return "blah";})
                 .range([0, width]);
             var y = d3.scale.linear()
-                .domain([0, d3.max(rabu.maxValues) + 5])
+                .domain([0, Math.max(d3.max(rabu.maxValues), d3.sum(features)) + 5])
                 .range([height, 0]);
             //    .range([height + margin.top, 0 + margin.top]);
 
