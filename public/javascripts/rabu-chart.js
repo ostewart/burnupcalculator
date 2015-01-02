@@ -20,12 +20,10 @@ define(["d3", "moment"], function (d3, moment) {
 
             var x = d3.time.scale()
                 .domain([moment(rabu.data[0].date).subtract("weeks", 1).valueOf(), moment(rabu.iterationDates[rabu.iterationDates.length-1]).valueOf()])
-                //    .tickFormat(function(t){return "blah";})
                 .range([0, width]);
             var y = d3.scale.linear()
                 .domain([0, Math.max(d3.max(rabu.maxValues), d3.sum(features)) + 5])
                 .range([height, 0]);
-            //    .range([height + margin.top, 0 + margin.top]);
 
 
             var xAxis = d3.svg.axis()
@@ -100,12 +98,6 @@ define(["d3", "moment"], function (d3, moment) {
 
                 });
             }
-
-
-            //var chart = d3.box()
-            //    .whiskers(function(d,i) {return [d.spread[0], d.spread[2]]})
-            //    .height(height)
-            //    .domain([min, max]);
 
             var boxWidth = 10;
 
