@@ -6,7 +6,9 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   cache
-)     
+)
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % "test"
 
 play.Project.playScalaSettings
 

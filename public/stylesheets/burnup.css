@@ -72,3 +72,18 @@ path.symbol {
     stroke: #666;
     stroke-width: 1.5px;
 }
+
+.feature-estimates {
+    display: block;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feature-estimates table {
+    width: 100%;
+}
+
+.feature-estimates table th, .feature-estimates table td {
+    text-align: left;
+}

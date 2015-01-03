@@ -1,5 +1,7 @@
 @(firstIterationEndDate: String, iterations: List[Double], plannedIterations: Int, features: List[Double], title: Option[String])
+@import org.joda.time.LocalDate
 @import play.api.libs.json.Json
+@import com.burnupcalculator.features.FeaturesCalculator
 
 @main(title.getOrElse("Burn Up Chart")) {
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/burnup.css")"/>
@@ -9,6 +11,33 @@
     <div id="main-chart">
 
     </div>
+
+    <div class="feature-estimates">
+        <h2>Completion Confidence Intervals</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Points</th>
+                    <th>90%</th>
+                    <th>50%</th>
+                    <th>10%</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for((spread,i) <- FeaturesCalculator.spreads(LocalDate.parse(firstIterationEndDate), features, iterations).zipWithIndex) {
+                    <tr>
+                        <td>@(i+1)</td>
+                        <td>@(features(i))</td>
+                        <td>@spread.ninety</td>
+                        <td>@spread.fifty</td>
+                        <td>@spread.ten</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
     <script>
     var data = @Html(Json.obj(
         "firstIterationEndDate" -> firstIterationEndDate,
@@ -17,9 +46,9 @@
         "features" -> features
     ).toString);
     require(["jquery","d3","moment","initerate","rabu-chart"],function($,d3,moment,initerate,chart) {
-    var rabu = initerate.init(data.firstIterationEndDate, data.iterations, data.plannedIterations);
-    console.log(rabu.iterationDates);
-    chart.draw(rabu, 800, 400, "#main-chart", data.features);
+        var rabu = initerate.init(data.firstIterationEndDate, data.iterations, data.plannedIterations);
+        console.log(rabu.iterationDates);
+        chart.draw(rabu, 800, 400, "#main-chart", data.features);
     });
     </script>
 }
