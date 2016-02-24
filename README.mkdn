@@ -1,4 +1,4 @@
 Burn Up Calculator
 =====================================
 
-Calculates a [http://www.jamesshore.com/Blog/Use-Risk-Management-to-Make-Solid-Commitments.html](James Shore style) burn up chart for your XP team.
+Calculates a [James Shore style](http://www.jamesshore.com/Blog/Use-Risk-Management-to-Make-Solid-Commitments.html) burn up chart for your XP team.
